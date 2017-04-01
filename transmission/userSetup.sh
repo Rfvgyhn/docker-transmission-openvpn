@@ -6,7 +6,8 @@ RUN_AS=root
 
 if [ -n "$PUID" ] && [ ! "$(id -u root)" -eq "$PUID" ]; then
     RUN_AS=abc
-    if [ ! "$(id -u ${RUN_AS})" -eq "$PUID" ]; then usermod -o -u "$PUID" ${RUN_AS} /data ; fi
+    echo "before: ${PUID}:${PGID}"
+    if [ ! "$(id -u ${RUN_AS})" -eq "$PUID" ]; then usermod -o -u "$PUID" ${RUN_AS} ; fi
     if [ ! "$(id -g ${RUN_AS})" -eq "$PGID" ]; then groupmod -o -g "$PGID" ${RUN_AS} ; fi
 
     echo "Setting owner for transmission paths to ${PUID}:${PGID}"
