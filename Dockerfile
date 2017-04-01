@@ -21,16 +21,18 @@ RUN apt-get update \
     && rm -rf dumb-init_*.deb \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && curl -L https://github.com/jwilder/dockerize/releases/download/v0.0.2/dockerize-linux-amd64-v0.0.2.tar.gz | tar -C /usr/local/bin -xzv \
-    && groupmod -g 1000 users \
-    && useradd -u 911 -U -d /config -s /bin/false abc \
+    && groupmod -g 1001 users \
+    && useradd -u 1000 -U -d /config -s /bin/false abc \
     && usermod -G users abc
 
 ADD openvpn/ /etc/openvpn/
 ADD transmission/ /etc/transmission/
 
-ENV OPENVPN_USERNAME=**None** \
-    OPENVPN_PASSWORD=**None** \
+ENV OPENVPN_USERNAME=asdf \
+    OPENVPN_PASSWORD=asdf \
     OPENVPN_PROVIDER=**None** \
+    OPENVPN_CONFIG=\
+    LOCAL_NETWORK=\
     "TRANSMISSION_ALT_SPEED_DOWN=50" \
     "TRANSMISSION_ALT_SPEED_ENABLED=false" \
     "TRANSMISSION_ALT_SPEED_TIME_BEGIN=540" \
@@ -52,7 +54,7 @@ ENV OPENVPN_USERNAME=**None** \
     "TRANSMISSION_ENCRYPTION=1" \
     "TRANSMISSION_IDLE_SEEDING_LIMIT=30" \
     "TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED=false" \
-    "TRANSMISSION_INCOMPLETE_DIR=/data/incomplete" \
+    "TRANSMISSION_INCOMPLETE_DIR=/data/in-progress" \
     "TRANSMISSION_INCOMPLETE_DIR_ENABLED=true" \
     "TRANSMISSION_LPD_ENABLED=false" \
     "TRANSMISSION_MAX_PEERS_GLOBAL=200" \
@@ -61,7 +63,7 @@ ENV OPENVPN_USERNAME=**None** \
     "TRANSMISSION_PEER_ID_TTL_HOURS=6" \
     "TRANSMISSION_PEER_LIMIT_GLOBAL=200" \
     "TRANSMISSION_PEER_LIMIT_PER_TORRENT=50" \
-    "TRANSMISSION_PEER_PORT=51413" \
+    "TRANSMISSION_PEER_PORT=31425" \
     "TRANSMISSION_PEER_PORT_RANDOM_HIGH=65535" \
     "TRANSMISSION_PEER_PORT_RANDOM_LOW=49152" \
     "TRANSMISSION_PEER_PORT_RANDOM_ON_START=false" \
@@ -102,9 +104,9 @@ ENV OPENVPN_USERNAME=**None** \
     "TRANSMISSION_UTP_ENABLED=true" \
     "TRANSMISSION_WATCH_DIR=/data/watch" \
     "TRANSMISSION_WATCH_DIR_ENABLED=true" \
-    "TRANSMISSION_HOME=/data/transmission-home" \
-    PUID=\
-    PGID=
+    "TRANSMISSION_HOME=/data/state" \
+    PUID=1010\
+    PGID=1001
 
 # Expose port and run
 EXPOSE 9091
