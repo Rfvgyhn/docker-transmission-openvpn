@@ -8,8 +8,6 @@
 echo "Updating TRANSMISSION_BIND_ADDRESS_IPV4 to the ip of $1 : $4"
 export TRANSMISSION_BIND_ADDRESS_IPV4=$4
 
-. /etc/transmission/userSetup.sh
-
 echo "Generating transmission settings.json from env variables"
 # Ensure TRANSMISSION_HOME is created
 mkdir -p ${TRANSMISSION_HOME}
@@ -21,7 +19,7 @@ if [ ! -e "/dev/random" ]; then
   ln -s /dev/urandom /dev/random
 fi
 
-
+. /etc/transmission/userSetup.sh
 
 echo "STARTING TRANSMISSION"
 exec sudo -u ${RUN_AS} /usr/bin/transmission-daemon -g ${TRANSMISSION_HOME} --logfile ${TRANSMISSION_HOME}/transmission.log &
