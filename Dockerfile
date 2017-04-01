@@ -106,8 +106,6 @@ ENV OPENVPN_USERNAME=**None** \
     PUID=\
     PGID=
 
-RUN usermod -u PUID /data
-
 # Expose port and run
 EXPOSE 9091
 CMD ["dumb-init", "/etc/openvpn/start.sh"]
